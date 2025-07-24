@@ -1,1 +1,64 @@
+♥ Configure google DNS on the linux Server
+Steps:
+  => sudo nano /etc/hosts
+    => add 8.8.8.8 google.com // to assign google.com DNS to our Linux Server
+  => nslookup google.com // to show prefferd DNS to our Linux Server
+♥ Create a user that have root privilages
+Steps:
+  => adduser been // to add been user into the system
+  => sudo su been // to switch user from root to been user
+  => usermod -aG sudo been // to give root privilages for our been user
+♥ Configure the Linux Server to have a static ip address
+Steps:
+  => sudo nano /etc/netplan/50-cloud-init.yaml // to change ip address configuration, use the following static configuration and save
+     network:
+       version: 2
+     ethernets:
+       enp0s3:
+     dhcp4: no
+     addresses: [192.168.1.50/24]
+     routes:
+     - to: default
+      via: 192.168.1.1
+     nameservers:
+      addresses: [8.8.8.8, 1.1.1.1]
+ => netplan apply // to apply the change in the ip address configuration
+♥ Configure ssh deamon to listen on customer port
+Steps:
+  => sudo nano /etc/ssh/sshd_config
+      - port 22
+      - PermitRootLogin yes
+  // make the above changes and save
+  // check port forwarding
+  => systemctl restart ssh // used to restart the ssh
+  => ssh root@196.188.250.164 -p 1717 // used to check ssh functionality using other machine
+♥ Configure ssh to login using SHA / Fingerprint
+Steps:
+  => ssh-keygen // generate fingerprint on local other machine using powershall
+    - copy .pub content and,
+  => nano .ssh/authorized_keys // on the server paste the copied .pub content
+  => ssh root@196.188.250.164 -p 1717 // used to check ssh functionality using other machine without password but with fingerprint
+♥ Firwall configuration for SSH
+Steps:
+  => ufw status // used to check the status of the firwall service
+  => ufw enable // used to enable the firwall service
+  => ufw allow ssh // used to allow ssh/22 to remotly login
+♥ Transfer file from your local computer to the user directory for unprivilleged user
+Steps:
+  => sudo su esh // used to change to unprivillaged user esh
+  => cd ~ // used to change to home folder for esh user
+    - home/esh
+  => scp -P 1717 been.txt esh@196.188.250.164:/home/esh/been.txt // used to transfer been.txt from local PC to server esh user
+♥ Install apache web server and make it accessible thorugh the linux server ip address
+Steps:
+  => sudo apt update // used to check the update from the mirror
+  => sudo apt upgrade  // used to install the update files
+  => sudo apt install apache2  // used to install apache webserver
+  => systemctl status apache // used to check the status of apache wether it is started or stopped
+    - configure port forwarding and firwall to access the apache in web using public server address
+♥ Schedule a task that logs the current time every minute
+Steps:
+  
 
+
+  
