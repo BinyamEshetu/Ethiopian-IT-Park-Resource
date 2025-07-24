@@ -35,7 +35,7 @@ Steps:
   => reboot now // used to reboot the machine
   => ss -ltunp // used to check if the ssh is used the assignd port
   => ssh root@196.188.250.164 -p 1717 // used to check ssh functionality using other machine
-♥ Configure ssh to login using SHA / Fingerprint
+♥ Configure ssh to login using SHA / Fingerprint // if the privillaged user is not .ssh file we need to create .ssh/auhtorized_key file and paste the public ip address in privilaged user home
 Steps:
   => ssh-keygen // generate fingerprint on local other machine using powershall
     - copy .pub content and,
@@ -51,17 +51,41 @@ Steps:
   => sudo su esh // used to change to unprivillaged user esh
   => cd ~ // used to change to home folder for esh user
     - home/esh
-  => scp -P 1717 been.txt esh@196.188.250.164:/home/esh/been.txt // used to transfer been.txt from local PC to server esh user
+  => scp -P 1717 been.txt esh@196.188.250.164:/home/esh/been.txt // used to transfer been.txt from local PC to server esh user, scp -P -r to transfer Folder r shows recursive
 ♥ Install apache web server and make it accessible thorugh the linux server ip address
 Steps:
   => sudo apt update // used to check the update from the mirror
   => sudo apt upgrade  // used to install the update files
   => sudo apt install apache2  // used to install apache webserver
+  => ip a
+  => curl 192.168.1.100 // used to check apache content
   => systemctl status apache // used to check the status of apache wether it is started or stopped
     - configure port forwarding and firwall to access the apache in web using public server address
 ♥ Schedule a task that logs the current time every minute
 Steps:
-  
+  => crometab -l // used to list sceduled task
+  => cronetab -e // used to add task on cronetab scheduler
+    - * * * * * date >> /home/user1/timelog.txt // crontab script or file or program and save at the end of 
+  => tail -f /home/user1/timelog.txt // used to see timelog.txt is running/scheduling is working
+lsblk
+attach from instance
+lsblk
+cfdisk /dev/bdb
+gpt
+create
+write
+yes
+lsblk
+mkfs.ext4 /dev/vdb1
+lsblk -f
+mount /dev/vdb1 /mnt
+lsblk -f
+mkdir folder
+nano folder/abc.txt
+ls
+unmount /mnt
+lsblk -f
+
 
 
   
