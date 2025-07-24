@@ -10,12 +10,13 @@ Steps:
   => usermod -aG sudo been // to give root privilages for our been user
 ♥ Configure the Linux Server to have a static ip address
 Steps:
+  => ip a // used to check ip address
   => sudo nano /etc/netplan/50-cloud-init.yaml // to change ip address configuration, use the following static configuration and save
      network:
        version: 2
      ethernets:
        enp0s3:
-     dhcp4: no
+     dhcp4: false
      addresses: [192.168.1.50/24]
      routes:
      - to: default
@@ -31,6 +32,8 @@ Steps:
   // make the above changes and save
   // check port forwarding
   => systemctl restart ssh // used to restart the ssh
+  => reboot now // used to reboot the machine
+  => ss -ltunp // used to check if the ssh is used the assignd port
   => ssh root@196.188.250.164 -p 1717 // used to check ssh functionality using other machine
 ♥ Configure ssh to login using SHA / Fingerprint
 Steps:
